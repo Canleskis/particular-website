@@ -3,5 +3,6 @@
 .idea
 
 public
-content/demos/*
+# ignore subdirectories but not files
+content/demos/*/
 content/benchmarks/*.json

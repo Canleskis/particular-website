@@ -45,7 +45,6 @@
     import init from "./example.js";
 
     const response = await fetch("example_bg.wasm");
-
     const transform = new TransformStream({
         flush() {
             setTimeout(

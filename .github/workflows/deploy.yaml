@@ -1,0 +1,45 @@
+name: Deploy
+
+on:
+    push:
+        branches: ["main"]
+    workflow_dispatch:
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Checkout Particular
+              uses: actions/checkout@v4
+              with:
+                  repository: canleskis/particular
+                  path: particular
+
+            - name: Setup Rust
+              uses: dtolnay/rust-toolchain@stable
+              with:
+                  target: wasm32-unknown-unknown
+
+            - name: Setup wasm-bindgen
+              uses: jetli/wasm-bindgen-action@v0.2.0
+              with:
+                  version: "0.2.89"
+
+            - uses: Swatinem/rust-cache@v2
+              with:
+                  workspaces: particular -> target
+
+            - name: Deploy Benchmarks
+              run: |
+                  bash scripts/deploy_benchmarks.sh content/benchmarks
+
+            - name: Deploy Examples
+              run: |
+                  bash scripts/deploy_showcase.sh
+
+            - name: Deploy Site
+              uses: shalzz/zola-deploy-action@v0.17.2
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
