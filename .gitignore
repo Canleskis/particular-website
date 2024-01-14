@@ -1,0 +1,7 @@
+.timetracker
+.[Vv][Ss][Cc]ode*
+.idea
+
+public
+content/demos/*
+content/benchmarks/*.json
