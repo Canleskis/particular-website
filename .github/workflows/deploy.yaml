@@ -25,7 +25,7 @@ jobs:
             - name: Setup wasm-bindgen
               uses: jetli/wasm-bindgen-action@v0.2.0
               with:
-                  version: "0.2.89"
+                  version: "0.2.92"
 
             - uses: Swatinem/rust-cache@v2
               with:
@@ -33,7 +33,7 @@ jobs:
 
             - name: Deploy Benchmarks
               run: |
-                  bash scripts/deploy_benchmarks.sh content/benchmarks
+                  bash scripts/deploy_benchmarks.sh
 
             - name: Deploy Examples
               run: |

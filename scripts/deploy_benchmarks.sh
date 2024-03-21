@@ -1,8 +1,8 @@
 # Add all the benchmarks to a list in single json file.
 
-out_dir=$1
+particular_dir=${1:-"particular"}
 name=${2:-"benchmarks"}
-particular_dir=${3:-"particular"}
+out_dir=${3:-"content/benchmarks"}
 
 buffer=""
 
