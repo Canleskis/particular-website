@@ -1,0 +1,417 @@
+ 
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Particular - Benchmarks</title>
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet" />
+    <style>
+        :root {
+            color-scheme: dark;
+            --header-height: 70px;
+            --default-width: 1500px;
+            --sides-padding: 8px;
+            --border-radius: 10px;
+            --main-color: #c0c0c0;
+        }
+
+        :dropdown {
+            --height: 40px;
+        }
+
+        html * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #1b1b1b;
+            font-family: "Fira Sans";
+            font-size: small;
+            color: #c0c0c0;
+            margin: 0;
+        }
+
+        header {
+            background-color: #121212;
+            height: var(--header-height);
+            border-bottom: 2px solid #5e5e5e;
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 0 var(--sides-padding);
+        }
+
+        .header-content {
+            display: flex;
+            max-width: var(--default-width);
+            height: 100%;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        .header-content a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .header-content a:hover,
+        .header-content label:hover {
+            filter: brightness(80%);
+        }
+
+        .header-content img {
+            height: 40px;
+        }
+
+        .header-content-left,
+        .header-content-main,
+        .header-content-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-content-left {
+            margin-right: auto;
+        }
+
+        .header-content-main-menu {
+            display: flex;
+        }
+
+        .header-content-main-menu a {
+            padding: 0 20px;
+        }
+
+        .header-content-right {
+            margin-left: 10px;
+        }
+
+        .backdrop {
+            visibility: hidden;
+            position: fixed;
+            top: var(--header-height);
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            background-color: #00000066;
+            opacity: 0;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        #hamburger {
+            width: 35px;
+            height: 28px;
+            position: relative;
+            cursor: pointer;
+            display: none;
+        }
+
+        #hamburger span {
+            position: absolute;
+            height: 4px;
+            width: 35px;
+            background-color: #c0c0c0;
+            border-radius: 2px;
+            left: 0;
+            transform: rotate(0deg);
+            transition-property: top, bottom, left, right, transform, width,
+                opacity;
+            transition-duration: 0.15s;
+            transition-timing-function: ease-in-out;
+        }
+
+        #hamburger span:nth-child(1) {
+            top: 0px;
+            transform-origin: left center;
+        }
+
+        #hamburger span:nth-child(2) {
+            top: 12px;
+            transform-origin: left center;
+        }
+
+        #hamburger span:nth-child(3) {
+            top: 24px;
+            transform-origin: left center;
+        }
+
+        #mobile-state {
+            display: none;
+        }
+
+        #mobile-state:checked+header #hamburger span:nth-child(1) {
+            transform: rotate(45deg);
+            top: 0px;
+            left: 5px;
+        }
+
+        #mobile-state:checked+header #hamburger span:nth-child(2) {
+            width: 0%;
+            opacity: 0;
+        }
+
+        #mobile-state:checked+header #hamburger span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 25px;
+            left: 5px;
+        }
+
+        @media (max-width: 920px) {
+            #hamburger {
+                display: inline-block;
+            }
+
+            .header-content-left a {
+                padding: 0px 10px;
+            }
+
+            .header-content-main {
+                position: fixed;
+                top: var(--header-height);
+                width: 250px;
+                height: 100%;
+                margin-left: -8px;
+                padding-bottom: var(--header-height);
+                opacity: 0;
+                box-shadow: 0 0 8px 5px rgba(0, 0, 0, 0.5);
+                clip-path: polygon(0% 0%, 120% 0%, 120% 100%, 0% 100%);
+                transform-origin: 0% 0%;
+                transform: translate(-100%, 0);
+                transition: transform 0.3s, opacity 0.3s;
+                background-color: #121212;
+            }
+
+            .header-content-main-menu {
+                flex-direction: column;
+                align-items: stretch;
+                width: 100%;
+                height: 100%;
+                overflow-y: auto;
+                text-align: center;
+            }
+
+            .header-content-main-menu a {
+                padding: 20px 0;
+            }
+
+            #mobile-state:checked+header .backdrop {
+                visibility: visible;
+                opacity: 1;
+            }
+
+            #mobile-state:checked+header .header-content-main {
+                transform: none;
+                opacity: 1;
+            }
+        }
+
+        main {
+            padding: 0 var(--sides-padding) 0;
+        }
+
+        .padded-container {
+            max-width: var(--default-width);
+            margin: 20px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layout">
+        <input id="mobile-state" type="checkbox" />
+        <header>
+            <label class="backdrop" for="mobile-state"></label>
+            <div class="header-content">
+                <div class="header-content-left">
+                    <label id="hamburger" for="mobile-state">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </label>
+                    <a href="/">
+                        <h1>PARTICULAR</h1>
+                    </a>
+                </div>
+
+                <div class="header-content-main">
+                    <div class="header-content-main-menu">
+                        <a href="/demos/">
+                            <h1>demos</h1>
+                        </a>
+                        <a href="/benchmarks/">
+                            <h1>benchmarks</h1>
+                        </a>
+                        <a href="https://docs.rs/particular/latest/particular/" target="_blank">
+                            <h1>documentation</h1>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="header-content-right">
+                    <a href="https://github.com/Canleskis/particular" target="_blank">
+                        <img src="/github-mark-white.svg" alt="GitHub repository" />
+                    </a>
+                </div>
+            </div>
+        </header>
+        <main>
+
+<style>
+    @media (max-width: 920px) {
+        body {
+            width: var(--default-width);
+        }
+    }
+
+    .padded-container ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .padded-container input {
+        font-size: 18px;
+        border: 2px solid #5e5e5e;
+        border-radius: var(--border-radius);
+        background-color: #121212;
+        padding: 5px;
+        color: inherit;
+        width: 100%;
+    }
+
+    .padded-container li {
+        border: 2px solid #5e5e5e;
+        border-radius: var(--border-radius);
+    }
+
+    .chart {
+        width: inherit;
+        height: 800px;
+    }
+
+    .benchmark-info {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        margin: 8px 0 0 8px;
+        gap: 10px;
+        z-index: 10;
+        font-size: 18px;
+    }
+
+    .benchmark-info h1 {
+        font-size: inherit;
+        font-weight: 100;
+        margin: 0;
+        border: 2px solid #5e5e5e;
+        border-radius: var(--border-radius);
+        padding: 4px;
+        white-space: nowrap;
+        background-color: #121212;
+    }
+</style>
+
+<script type="module">
+    import { showChart } from "/utils.js";
+
+    function reduceGroup(benchmark) {
+        return Object.values(benchmark).reduce((acc, benchmark) => {
+            const {
+                criterion_benchmark_v1: { function_id, value_str },
+                criterion_estimates_v1: {
+                    mean: { point_estimate },
+                },
+            } = benchmark;
+
+            acc[function_id] ??= {};
+            acc[function_id][value_str] = point_estimate;
+
+            return acc;
+        }, {});
+    }
+
+    const colour_map = JSON.parse(
+        '{"gpu::BruteForce":"#FF0000","parallel::BarnesHut::0.3":"#00CC00","parallel::BarnesHut::0.7":"#B8CC00","parallel::BruteForceSIMD<4>":"#FF6400","parallel::BruteForceSIMD<8>":"#FF6400","parallel::BruteForceScalar":"#0080FF","sequential::BarnesHut::0.3":"#008E00","sequential::BarnesHut::0.7":"#808E00","sequential::BruteForcePairs":"#007575","sequential::BruteForceSIMD<4>":"#993C00","sequential::BruteForceSIMD<8>":"#993C00","sequential::BruteForceScalar":"#004C99"}'
+    );
+
+    const benches = await fetch("benchmarks.json")
+        .then((res) => res.json())
+        .then((bench) =>
+            bench.map(({ tags, extra, benchmarks }) => {
+                return {
+                    tags,
+                    extra,
+                    cm: reduceGroup(benchmarks),
+                };
+            })
+        );
+
+
+    let list = document.getElementById("benchmark-list");
+
+    let listElements = benches.map(({ tags, extra, cm }) => {
+        const series = Object.entries(cm).map(([name, data]) => {
+            return {
+                name,
+                data: Object.entries(data),
+                type: "line",
+                symbol: "circle",
+                symbolSize: 8,
+            };
+        });
+        const color = series.map(({ name }) => colour_map[name]);
+
+        let li = document.createElement("li");
+        li.id = tags.join("-").replace(/ /g, "-").toLowerCase();
+        list.appendChild(li);
+
+        let info = document.createElement("div");
+        info.className = "benchmark-info";
+        li.appendChild(info);
+
+        let chart = document.createElement("div");
+        chart.className = "chart";
+        li.appendChild(chart);
+
+        Object.values(tags).flatMap((tag) => {
+            let benchmarkName = document.createElement("h1");
+            benchmarkName.textContent = tag;
+            info.appendChild(benchmarkName);
+        });
+        showChart(chart, series, color);
+
+        return li;
+    });
+
+    let search = document.getElementById("search");
+
+    search.addEventListener("input", (item) => {
+        const input = item.target.value.toLowerCase().split(" ");
+        listElements.forEach((li) => {
+            li.style.display = input.every((word) => li.id.includes(word))
+                ? "flex"
+                : "none";
+        });
+    });
+</script>
+
+<script src="/echarts.js"></script>
+<div class=" padded-container">
+    <input id="search" type="text" placeholder="Search tags (e.g., f32 3d wasm)">
+    <ul id="benchmark-list">
+    </ul>
+</div>
+</main>
+    </div>
+</body>
+
+</html>

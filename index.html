@@ -1,0 +1,511 @@
+ 
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Particular</title>
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet" />
+    <style>
+        :root {
+            color-scheme: dark;
+            --header-height: 70px;
+            --default-width: 1500px;
+            --sides-padding: 8px;
+            --border-radius: 10px;
+            --main-color: #c0c0c0;
+        }
+
+        :dropdown {
+            --height: 40px;
+        }
+
+        html * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #1b1b1b;
+            font-family: "Fira Sans";
+            font-size: small;
+            color: #c0c0c0;
+            margin: 0;
+        }
+
+        header {
+            background-color: #121212;
+            height: var(--header-height);
+            border-bottom: 2px solid #5e5e5e;
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 0 var(--sides-padding);
+        }
+
+        .header-content {
+            display: flex;
+            max-width: var(--default-width);
+            height: 100%;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        .header-content a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .header-content a:hover,
+        .header-content label:hover {
+            filter: brightness(80%);
+        }
+
+        .header-content img {
+            height: 40px;
+        }
+
+        .header-content-left,
+        .header-content-main,
+        .header-content-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-content-left {
+            margin-right: auto;
+        }
+
+        .header-content-main-menu {
+            display: flex;
+        }
+
+        .header-content-main-menu a {
+            padding: 0 20px;
+        }
+
+        .header-content-right {
+            margin-left: 10px;
+        }
+
+        .backdrop {
+            visibility: hidden;
+            position: fixed;
+            top: var(--header-height);
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            background-color: #00000066;
+            opacity: 0;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        #hamburger {
+            width: 35px;
+            height: 28px;
+            position: relative;
+            cursor: pointer;
+            display: none;
+        }
+
+        #hamburger span {
+            position: absolute;
+            height: 4px;
+            width: 35px;
+            background-color: #c0c0c0;
+            border-radius: 2px;
+            left: 0;
+            transform: rotate(0deg);
+            transition-property: top, bottom, left, right, transform, width,
+                opacity;
+            transition-duration: 0.15s;
+            transition-timing-function: ease-in-out;
+        }
+
+        #hamburger span:nth-child(1) {
+            top: 0px;
+            transform-origin: left center;
+        }
+
+        #hamburger span:nth-child(2) {
+            top: 12px;
+            transform-origin: left center;
+        }
+
+        #hamburger span:nth-child(3) {
+            top: 24px;
+            transform-origin: left center;
+        }
+
+        #mobile-state {
+            display: none;
+        }
+
+        #mobile-state:checked+header #hamburger span:nth-child(1) {
+            transform: rotate(45deg);
+            top: 0px;
+            left: 5px;
+        }
+
+        #mobile-state:checked+header #hamburger span:nth-child(2) {
+            width: 0%;
+            opacity: 0;
+        }
+
+        #mobile-state:checked+header #hamburger span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 25px;
+            left: 5px;
+        }
+
+        @media (max-width: 920px) {
+            #hamburger {
+                display: inline-block;
+            }
+
+            .header-content-left a {
+                padding: 0px 10px;
+            }
+
+            .header-content-main {
+                position: fixed;
+                top: var(--header-height);
+                width: 250px;
+                height: 100%;
+                margin-left: -8px;
+                padding-bottom: var(--header-height);
+                opacity: 0;
+                box-shadow: 0 0 8px 5px rgba(0, 0, 0, 0.5);
+                clip-path: polygon(0% 0%, 120% 0%, 120% 100%, 0% 100%);
+                transform-origin: 0% 0%;
+                transform: translate(-100%, 0);
+                transition: transform 0.3s, opacity 0.3s;
+                background-color: #121212;
+            }
+
+            .header-content-main-menu {
+                flex-direction: column;
+                align-items: stretch;
+                width: 100%;
+                height: 100%;
+                overflow-y: auto;
+                text-align: center;
+            }
+
+            .header-content-main-menu a {
+                padding: 20px 0;
+            }
+
+            #mobile-state:checked+header .backdrop {
+                visibility: visible;
+                opacity: 1;
+            }
+
+            #mobile-state:checked+header .header-content-main {
+                transform: none;
+                opacity: 1;
+            }
+        }
+
+        main {
+            padding: 0 var(--sides-padding) 0;
+        }
+
+        .padded-container {
+            max-width: var(--default-width);
+            margin: 20px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layout">
+        <input id="mobile-state" type="checkbox" />
+        <header>
+            <label class="backdrop" for="mobile-state"></label>
+            <div class="header-content">
+                <div class="header-content-left">
+                    <label id="hamburger" for="mobile-state">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </label>
+                    <a href="/">
+                        <h1>PARTICULAR</h1>
+                    </a>
+                </div>
+
+                <div class="header-content-main">
+                    <div class="header-content-main-menu">
+                        <a href="/demos/">
+                            <h1>demos</h1>
+                        </a>
+                        <a href="/benchmarks/">
+                            <h1>benchmarks</h1>
+                        </a>
+                        <a href="https://docs.rs/particular/latest/particular/" target="_blank">
+                            <h1>documentation</h1>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="header-content-right">
+                    <a href="https://github.com/Canleskis/particular" target="_blank">
+                        <img src="/github-mark-white.svg" alt="GitHub repository" />
+                    </a>
+                </div>
+            </div>
+        </header>
+        <main>
+<style>
+    .quickstart {
+        font-size: medium;
+        border: 2px solid #5e5e5e;
+        border-radius: var(--border-radius);
+        padding: 0 20px;
+    }
+
+    .quickstart h1,
+    .quickstart h2 {
+        padding-bottom: 0.3em;
+        border-bottom: 1px solid #5e5e5e;
+    }
+
+    .quickstart pre {
+        overflow: auto;
+    }
+
+    .quickstart img {
+        max-width: 100%;
+        border-radius: 5px;
+    }
+
+    .quickstart a img {
+        border-radius: 0;
+    }
+
+    .quickstart a:link {
+        color: #66c0df;
+        text-decoration: none;
+    }
+
+    .quickstart a:visited {
+        color: #7266df;
+    }
+
+    .quickstart a:hover {
+        text-decoration: underline;
+    }
+
+    .quickstart pre {
+        border-radius: 5px;
+        padding: 10px;
+    }
+</style>
+
+<div class="padded-container">
+    <div class="quickstart">
+        <h1 id="particular">Particular</h1>
+<div align="center">
+    <img src="https://github.com/Canleskis/particular/blob/main/particular/particular-showcase.gif?raw=true" alt="showcase gif">
+</div>
+<p><a href="https://github.com/canleskis/particular#license"><img src="https://img.shields.io/badge/license-MIT%2FApache-blue.svg" alt="MIT/Apache 2.0" /></a>
+<a href="https://crates.io/crates/particular"><img src="https://img.shields.io/crates/v/particular" alt="Crates.io" /></a>
+<a href="https://docs.rs/particular"><img src="https://docs.rs/particular/badge.svg" alt="Docs" /></a></p>
+<p>Particular is a crate providing a simple way to simulate N-body gravitational interaction of
+particles in Rust.</p>
+<h2 id="change-log"><a href="https://github.com/Canleskis/particular/blob/main/particular/CHANGELOG.md">Change log</a></h2>
+<h2 id="goals">Goals</h2>
+<p>The main goal of this crate is to provide users with a simple API to set up N-body gravitational
+simulations that can easily be integrated into existing game and physics engines. Thus it does
+not concern itself with numerical integration or other similar tools and instead only focuses on
+the acceleration calculations.</p>
+<p>Particular is also built with performance in mind and provides multiple ways of computing the
+acceleration between particles.</p>
+<h3 id="computation-algorithms">Computation algorithms</h3>
+<p>There are currently 2 algorithms used by the available compute methods:
+<a href="https://en.wikipedia.org/wiki/N-body_problem#Simulation">Brute-force</a> and
+<a href="https://en.wikipedia.org/wiki/Barnes%E2%80%93Hut_simulation">Barnes-Hut</a>.</p>
+<p>Generally speaking, the Brute-force algorithm is more accurate, but slower. The Barnes-Hut
+algorithm allows trading accuracy for speed by increasing the <code>theta</code> parameter.<br />
+You can see more about their relative performance <a href="https://particular.rs/benchmarks/">here</a>.</p>
+<p>Particular uses <a href="https://github.com/rayon-rs/rayon">rayon</a> for parallelization and
+<a href="https://github.com/gfx-rs/wgpu">wgpu</a> for GPU computation.<br />
+Enable the respective <code>parallel</code> and <code>gpu</code> features to access the available compute methods.</p>
+<h2 id="using-particular">Using Particular</h2>
+<p>Particular consists of two &quot;modules&quot;, one that takes care of the abstraction of the computation of
+the gravitational forces between bodies for different floating-point types and dimensions, and one
+that facilitates usage of that abstraction for user-defined andnon-user-defined types. For most
+simple use cases, the latter is all that you need to know about.</p>
+<h3 id="simple-usage">Simple usage</h3>
+<p>The <a href="https://docs.rs/particular/latest/particular/particle/trait.Particle.html"><code>Particle</code></a> trait provides the main abstraction layer between the internal representation
+of the position and mass of an object in N-dimensional space and external types by defining
+methods to retrieve a position and a gravitational parameter.<br />
+These methods respectively return an array of scalars and a scalar, which are converted using
+the <a href="https://docs.rs/particular/latest/particular/particle/trait.IntoPointMass.html#method.point_mass">point_mass</a> method to interface with the underlying algorithm implementations.</p>
+<h4 id="implementing-the-particle-trait">Implementing the <a href="https://docs.rs/particular/latest/particular/particle/trait.Particle.html"><code>Particle</code></a> trait</h4>
+<p>When possible, it can be useful to implement <a href="https://docs.rs/particular/latest/particular/particle/trait.Particle.html"><code>Particle</code></a> on a type.</p>
+<h5 id="deriving">Deriving</h5>
+<p>Used when the type has fields named <code>position</code> and <code>mu</code>:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span>#[</span><span style="color:#bf616a;">derive</span><span>(Particle)]
+</span><span>#[</span><span style="color:#bf616a;">dim</span><span>(3)]
+</span><span style="color:#b48ead;">struct </span><span>Body {
+</span><span>    </span><span style="color:#bf616a;">position</span><span>: Vec3,
+</span><span>    </span><span style="color:#bf616a;">mu</span><span>: </span><span style="color:#b48ead;">f32</span><span>,
+</span><span style="color:#65737e;">//  ...
+</span><span>}
+</span></code></pre>
+<h5 id="manual-implementation">Manual implementation</h5>
+<p>Used when the type does not directly provide a position and a gravitational parameter.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">struct </span><span>Body {
+</span><span>    </span><span style="color:#bf616a;">position</span><span>: Vec3,
+</span><span>    </span><span style="color:#bf616a;">mass</span><span>: </span><span style="color:#b48ead;">f32</span><span>,
+</span><span style="color:#65737e;">//  ...
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">impl </span><span>Particle </span><span style="color:#b48ead;">for </span><span>Body {
+</span><span>    </span><span style="color:#b48ead;">type </span><span>Array = [</span><span style="color:#b48ead;">f32</span><span>; </span><span style="color:#d08770;">3</span><span>];
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">position</span><span>(&amp;</span><span style="color:#bf616a;">self</span><span>) -&gt; [</span><span style="color:#b48ead;">f32</span><span>; </span><span style="color:#d08770;">3</span><span>] {
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.position.</span><span style="color:#96b5b4;">into</span><span>()
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">mu</span><span>(&amp;</span><span style="color:#bf616a;">self</span><span>) -&gt; </span><span style="color:#b48ead;">f32 </span><span>{
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.mass * G
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>If you can't implement <a href="https://docs.rs/particular/latest/particular/particle/trait.Particle.html"><code>Particle</code></a> on a type, you can use the fact that it is implemented for
+tuples of an array and its scalar type instead of creating an intermediate type.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">let</span><span> particle = ([</span><span style="color:#d08770;">1.0</span><span>, </span><span style="color:#d08770;">1.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>], </span><span style="color:#d08770;">5.0</span><span>);
+</span><span>
+</span><span>assert_eq!(particle.</span><span style="color:#96b5b4;">position</span><span>(), [</span><span style="color:#d08770;">1.0</span><span>, </span><span style="color:#d08770;">1.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>]);
+</span><span>assert_eq!(particle.</span><span style="color:#96b5b4;">mu</span><span>(), </span><span style="color:#d08770;">5.0</span><span>);
+</span></code></pre>
+<h4 id="computing-and-using-the-gravitational-acceleration">Computing and using the gravitational acceleration</h4>
+<p>In order to compute the accelerations of your particles, you can use the <a href="https://docs.rs/particular/latest/particular/particle/trait.Accelerations.html#method.accelerations">accelerations</a> method
+on iterators, passing in a mutable reference to a <a href="https://docs.rs/particular/latest/particular/compute_method/trait.ComputeMethod.html"><code>ComputeMethod</code></a> of your choice. It returns
+the acceleration of each iterated item, preserving the original order.<br />
+Because it collects the mapped particles in a <a href="https://docs.rs/particular/latest/particular/compute_method/storage/struct.ParticleReordered.html"><code>ParticleReordered</code></a> in order to optimise the
+computation of forces of massless particles, this method call results in one additional
+allocation. See the <a href="#advanced-usage">advanced usage</a> section for information on how to opt out.</p>
+<h5 id="when-the-iterated-type-implements-particle">When the iterated type implements <a href="https://docs.rs/particular/latest/particular/particle/trait.Particle.html"><code>Particle</code></a></h5>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">for </span><span>(acceleration, body) in bodies.</span><span style="color:#96b5b4;">iter</span><span>().</span><span style="color:#96b5b4;">accelerations</span><span>(&amp;</span><span style="color:#b48ead;">mut</span><span> cm).</span><span style="color:#96b5b4;">zip</span><span>(&amp;</span><span style="color:#b48ead;">mut</span><span> bodies) {
+</span><span>    body.velocity += Vec3::from(acceleration) * </span><span style="color:#d08770;">DT</span><span>;
+</span><span>    body.position += body.velocity * </span><span style="color:#d08770;">DT</span><span>;
+</span><span>}
+</span></code></pre>
+<h5 id="when-the-iterated-type-doesn-t-implement-particle">When the iterated type doesn't implement <a href="https://docs.rs/particular/latest/particular/particle/trait.Particle.html"><code>Particle</code></a></h5>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#65737e;">// Items are a tuple of a velocity, a position and a mass.
+</span><span style="color:#65737e;">// We map them to a tuple of the positions as an array and the mu,
+</span><span style="color:#65737e;">// since this implements `Particle`.
+</span><span style="color:#b48ead;">let</span><span> accelerations = items
+</span><span>    .</span><span style="color:#96b5b4;">iter</span><span>()
+</span><span>    .</span><span style="color:#96b5b4;">map</span><span>(|(_, </span><span style="color:#bf616a;">position</span><span>, </span><span style="color:#bf616a;">mass</span><span>)| (*position.</span><span style="color:#96b5b4;">as_array</span><span>(), *mass * G))
+</span><span>    .</span><span style="color:#96b5b4;">accelerations</span><span>(&amp;</span><span style="color:#b48ead;">mut</span><span> cm);
+</span><span>
+</span><span style="color:#b48ead;">for </span><span>(acceleration, (velocity, position, _)) in accelerations.</span><span style="color:#96b5b4;">zip</span><span>(&amp;</span><span style="color:#b48ead;">mut</span><span> items) {
+</span><span>    *velocity += Vec3::from(acceleration) * </span><span style="color:#d08770;">DT</span><span>;
+</span><span>    *position += *velocity * </span><span style="color:#d08770;">DT</span><span>;
+</span><span>}
+</span></code></pre>
+<h3 id="advanced-usage">Advanced usage</h3>
+<p>In some instances the iterator abstraction provided by particular might not be flexible enough.
+For example, you might need to access the tree built from the particles for the Barnes-Hut
+algorithm, want to compute the gravitational forces between two distinct collections of particles,
+or both at the same time.</p>
+<h4 id="the-pointmass-type">The <a href="https://docs.rs/particular/latest/particular/compute_method/storage/struct.PointMass.html"><code>PointMass</code></a> type</h4>
+<p>The underlying type used in storages is the <a href="https://docs.rs/particular/latest/particular/compute_method/storage/struct.PointMass.html"><code>PointMass</code></a>, a simple representation in
+N-dimensional space of a position and a gravitational parameter. Instead of going through a
+<a href="https://docs.rs/particular/latest/particular/compute_method/trait.ComputeMethod.html"><code>ComputeMethod</code></a>, you can directly use the different generic methods available to compute the
+gravitational forces between <a href="https://docs.rs/particular/latest/particular/compute_method/storage/struct.PointMass.html"><code>PointMass</code></a>es, with variants optimised for scalar and simd types.</p>
+<h5 id="example">Example</h5>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>particular::math::Vec2;
+</span><span>
+</span><span style="color:#b48ead;">use </span><span>storage::PointMass;
+</span><span>
+</span><span style="color:#b48ead;">let</span><span> p1 = PointMass::new(Vec2::new(</span><span style="color:#d08770;">0.0</span><span>, </span><span style="color:#d08770;">1.0</span><span>), </span><span style="color:#d08770;">1.0</span><span>);
+</span><span style="color:#b48ead;">let</span><span> p2 = PointMass::new(Vec2::new(</span><span style="color:#d08770;">0.0</span><span>, </span><span style="color:#d08770;">0.0</span><span>), </span><span style="color:#d08770;">1.0</span><span>);
+</span><span style="color:#b48ead;">let</span><span> softening = </span><span style="color:#d08770;">0.0</span><span>;
+</span><span>
+</span><span>assert_eq!(p1.force_scalar::&lt;false&gt;(p2.position, p2.mass, softening), Vec2::new(</span><span style="color:#d08770;">0.0</span><span>, -</span><span style="color:#d08770;">1.0</span><span>));
+</span></code></pre>
+<h4 id="storages-and-built-in-computemethod-implementations">Storages and built-in <a href="https://docs.rs/particular/latest/particular/compute_method/trait.ComputeMethod.html"><code>ComputeMethod</code></a> implementations</h4>
+<p>Storages are containers that make it easy to apply certain optimisation or algorithms on
+collections of particles when computing their gravitational acceleration.</p>
+<p>The <a href="https://docs.rs/particular/latest/particular/compute_method/storage/struct.ParticleSystem.html"><code>ParticleSystem</code></a> storage defines an <code>affected</code> slice of particles and a <code>massive</code> storage,
+allowing algorithms to compute gravitational forces the particles in the <code>massive</code> storage exert
+on the <code>affected</code> particles. It is used to implement most compute methods, and blanket
+implementations with the other storages allow a <a href="https://docs.rs/particular/latest/particular/compute_method/trait.ComputeMethod.html"><code>ComputeMethod</code></a> implemented with
+<a href="https://docs.rs/particular/latest/particular/compute_method/storage/struct.ParticleSliceSystem.html"><code>ParticleSliceSystem</code></a> or <a href="https://docs.rs/particular/latest/particular/compute_method/storage/struct.ParticleTreeSystem.html"><code>ParticleTreeSystem</code></a> to also be implemented with the other
+storages.</p>
+<p>The <a href="https://docs.rs/particular/latest/particular/compute_method/storage/struct.ParticleReordered.html"><code>ParticleReordered</code></a> similarly defines a slice of particles, but stores a copy of them in a
+<a href="https://docs.rs/particular/latest/particular/compute_method/storage/struct.ParticleOrdered.html"><code>ParticleOrdered</code></a>. These two storages make it easy for algorithms to skip particles with no
+mass when computing the gravitational forces of particles.</p>
+<h5 id="example-1">Example</h5>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>particular::math::Vec3;
+</span><span>
+</span><span style="color:#b48ead;">let</span><span> particles = vec![
+</span><span>    </span><span style="color:#65737e;">// ...
+</span><span>];
+</span><span>
+</span><span style="color:#65737e;">// Create a `ParticleOrdered` to split massive and massless particles.
+</span><span style="color:#b48ead;">let</span><span> ordered = ParticleOrdered::from(&amp;*particles);
+</span><span>
+</span><span style="color:#65737e;">// Build a `ParticleTree` from the massive particles.
+</span><span style="color:#b48ead;">let</span><span> tree = ParticleTree::from(ordered.</span><span style="color:#96b5b4;">massive</span><span>());
+</span><span>
+</span><span style="color:#65737e;">// Do something with the tree.
+</span><span style="color:#b48ead;">for </span><span>(node, data) in std::iter::zip(&amp;tree.</span><span style="color:#96b5b4;">get</span><span>().nodes, &amp;tree.</span><span style="color:#96b5b4;">get</span><span>().data) {
+</span><span>    </span><span style="color:#65737e;">// ...
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">let</span><span> bh = &amp;</span><span style="color:#b48ead;">mut </span><span>sequential::BarnesHut { theta: </span><span style="color:#d08770;">0.5 </span><span>};
+</span><span style="color:#65737e;">// The implementation computes the acceleration exerted on the particles in
+</span><span style="color:#65737e;">// the `affected` slice.
+</span><span style="color:#65737e;">// As such, this only computes the acceleration of the massless particles.
+</span><span style="color:#b48ead;">let</span><span> accelerations = bh.</span><span style="color:#96b5b4;">compute</span><span>(ParticleSystem {
+</span><span>    affected: ordered.</span><span style="color:#96b5b4;">massless</span><span>(),
+</span><span>    massive: &amp;tree,
+</span><span>});
+</span></code></pre>
+<h4 id="custom-computemethod-implementations">Custom <a href="https://docs.rs/particular/latest/particular/compute_method/trait.ComputeMethod.html"><code>ComputeMethod</code></a> implementations</h4>
+<p>In order to work with the highest number of cases, built-in compute method implementations may
+not be the most appropriate or optimised for your specific use case. You can implement the
+<a href="https://docs.rs/particular/latest/particular/compute_method/trait.ComputeMethod.html"><code>ComputeMethod</code></a> trait on your own type to satisfy your specific requirements but also if you
+want to implement other algorithms.</p>
+<h5 id="example-2">Example</h5>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>particular::math::Vec3;
+</span><span>
+</span><span style="color:#b48ead;">struct </span><span>MyComputeMethod;
+</span><span>
+</span><span style="color:#b48ead;">impl </span><span>ComputeMethod&lt;ParticleReordered&lt;&#39;_, Vec3, </span><span style="color:#b48ead;">f32</span><span>&gt;&gt; </span><span style="color:#b48ead;">for </span><span>MyComputeMethod {
+</span><span>    </span><span style="color:#b48ead;">type </span><span>Output = Vec&lt;Vec3&gt;;
+</span><span>
+</span><span>    #[</span><span style="color:#bf616a;">inline</span><span>]
+</span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">compute</span><span>(&amp;</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">storage</span><span>: ParticleReordered&lt;Vec3, </span><span style="color:#b48ead;">f32</span><span>&gt;) -&gt; </span><span style="color:#b48ead;">Self::</span><span>Output {
+</span><span>        </span><span style="color:#65737e;">// Only return the accelerations of the massless particles.
+</span><span>        sequential::BruteForceScalar.</span><span style="color:#96b5b4;">compute</span><span>(ParticleSystem {
+</span><span>            affected: storage.</span><span style="color:#96b5b4;">massless</span><span>(),
+</span><span>            massive: storage.</span><span style="color:#96b5b4;">massive</span><span>(),
+</span><span>        })
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h2 id="license">License</h2>
+<p>This project is licensed under either of <a href="https://github.com/Canleskis/particular/blob/main/LICENSE-APACHE">Apache License, Version 2.0</a> or <a href="https://github.com/Canleskis/particular/blob/main/LICENSE-MIT">MIT license</a>, at your option.</p>
+<h2 id="contribution">Contribution</h2>
+<p>Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in this project by you, as defined in the Apache 2.0 license, shall be dual licensed as above, without any additional terms or conditions.</p>
+
+    </div>
+</div>
+</main>
+    </div>
+</body>
+
+</html>
