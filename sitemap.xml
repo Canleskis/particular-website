@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>particular.rs/</loc>
+    </url>
+    <url>
+        <loc>particular.rs/benchmarks/</loc>
+    </url>
+    <url>
+        <loc>particular.rs/demos/</loc>
+    </url>
+    <url>
+        <loc>particular.rs/demos/particle-toy/</loc>
+    </url>
+    <url>
+        <loc>particular.rs/demos/physics-scenes/</loc>
+    </url>
+    <url>
+        <loc>particular.rs/demos/pocket-solar-system/</loc>
+    </url>
+    <url>
+        <loc>particular.rs/demos/ring-formation/</loc>
+    </url>
+</urlset>
